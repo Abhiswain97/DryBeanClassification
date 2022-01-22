@@ -2,7 +2,7 @@ import streamlit as st
 import tensorflow as tf
 import requests
 import numpy as np
-import re
+from sklearn.preprocessing import StandardScaler
 
 def predict(instances):
 
@@ -63,9 +63,11 @@ if btn:
 
     values = [float(v) for v in values.split(',')]
 
-    with st.spinner("Classifying...."):
-        preds = predict(values)
+    values = StandardScaler().fit_transform(np.array(values).reshape(-1, 1))
 
+    with st.spinner("Classifying...."):
+        preds = predict(values.reshape(-1).tolist())
+        
         idx = tf.argmax(preds['predictions'], axis=1)
 
         st.success(f"The predicted class is: {idx2class[idx.numpy()[0]]}")
