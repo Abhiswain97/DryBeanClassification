@@ -1,5 +1,15 @@
 # PGD_thesis
 
+## Table of Contents:
+
+View the noteboks phase-wise following the links:
+
+- [Data Acquisition](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-1-Documentation-notebook.ipynb) 
+- [EDA - Exploratory Data Analysis](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-2-EDA-notebook.ipynb)
+- [Feature Selection & Modelling](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-3-Feature-Selection-and-Modelling%20.ipynb)
+- [Advanced Modelling](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-4-TF-NN.ipynb)
+
+
 ## Serving the tensorflow model
 
 You can directly serve the model and make api calls to get the predictions. Pre-requisite is just have docker installed
