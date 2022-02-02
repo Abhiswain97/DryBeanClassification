@@ -4,10 +4,10 @@
 
 View the noteboks phase-wise following the links:
 
-- [Data Acquisition](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-1-Documentation-notebook.ipynb) 
-- [EDA - Exploratory Data Analysis](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-2-EDA-notebook.ipynb)
-- [Feature Selection & Modelling](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-3-Feature-Selection-and-Modelling%20.ipynb)
-- [Advanced Modelling](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-4-TF-NN.ipynb)
+- [Data Acquisition](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-1-Documentation-notebook.ipynb) 
+- [EDA - Exploratory Data Analysis](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-2-EDA.ipynb)
+- [Feature Selection & Modelling](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-3-Feature-Selection-and-Modelling%20.ipynb)
+- [Advanced Modelling](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-4-TF-NN.ipynb)
 
 
 ## Serving the tensorflow model
