@@ -1,13 +1,33 @@
 # PGD_thesis
 
+## What is the problem about?
+
+  Dry bean is the most popular pulse produced in the world. The main problem dry bean
+  producers and marketers face is in ascertaining good seed quality. Lower quality of
+  seeds leads to lower quality of produce. Seed quality is the key to bean cultivation in
+  terms of yield and disease. Manual classification and sorting of bean seeds is a difficult
+  process. Our objective is to use Machine learning techniques to do the automatic
+  classification of seeds.
+
+## Why is this problem important to solve?
+
+  Ascertaining seed quality is important for producers and marketers. Doing this manually
+  would require a lot of effort and is a difficult process. This is why we try to use machine
+  learning techniques to do the automatic classification of seeds.
+  
+## Business/Real-World impact of solving this problem?
+  - Saves hours of manual sorting and classification of seeds.
+  - We can do it in real-time.
+
+
 ## Table of Contents:
 
 View the noteboks phase-wise following the links:
 
-- [Data Acquisition](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-1-Documentation-notebook.ipynb) 
-- [EDA - Exploratory Data Analysis](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-2-EDA-notebook.ipynb)
-- [Feature Selection & Modelling](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-3-Feature-Selection-and-Modelling%20.ipynb)
-- [Advanced Modelling](https://nbviewer.org/github/Abhiswain97/PGD_thesis/blob/master/Phase-4-TF-NN.ipynb)
+- [Data Acquisition](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-1-Documentation-notebook.ipynb) 
+- [EDA - Exploratory Data Analysis](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-2-EDA.ipynb)
+- [Feature Selection & Modelling](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-3-Feature-Selection-and-Modelling%20.ipynb)
+- [Advanced Modelling](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-4-TF-NN.ipynb)
 
 
 ## Serving the tensorflow model
