@@ -20,3 +20,5 @@ pytorchlightning/
 *.jpg
 
 *.png
+
+.vscode/

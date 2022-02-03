@@ -20,10 +20,17 @@ You can directly serve the model and make api calls to get the predictions. Pre-
 
 - Inside the container, start the model server: `tensorflow_model_server --rest_api_port=8605 --model_name=dry_bean_model --model_base_path=/DryBean/models/best_model`
 
-## Using the app 
+## Using the app
+
+<p align="center">
+  <img src="app.png">
+</p>
+
 
 - First, serve the model using the above instructions
 
 - Next, in another terminal first install the requirements using: `pip install -r requirements.txt`
 
 - Now just do: `streamlit run deploy\deploy.py`
+
+
