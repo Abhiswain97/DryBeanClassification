@@ -1,0 +1,12 @@
+{
+    "bagging_fraction": 0.8398911837172205,
+    "bagging_freq": 2,
+    "feature_fraction": 0.6410074069753706,
+    "learning_rate": 0.047944542147959665,
+    "min_child_samples": 55,
+    "min_split_gain": 0.7277531302136037,
+    "n_estimators": 221,
+    "num_leaves": 159,
+    "reg_alpha": 0.03681044315160779,
+    "reg_lambda": 8.554751712910019e-06
+}
