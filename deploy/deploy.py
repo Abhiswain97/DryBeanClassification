@@ -36,7 +36,8 @@ st.sidebar.markdown(
 )
 
 res = st.sidebar.selectbox(
-    "Choose Model", options=["Random Forest", "SVM", "Vanila NN"]
+    "Choose Model",
+    options=["LightGBM", "Bagging_Decision_tree", "Vanilla_Net"],
 )
 
 st.sidebar.markdown(
@@ -58,39 +59,55 @@ if file_uploader is not None:
 
     st.dataframe(data=df.head())
 
-model = None
+    model = None
 
-if res == "Random Forest":
-    model = joblib.load("ML_models\\RandomForest-tuned.joblib")
+    if res == "LightGBM":
+        model = joblib.load("ML_models\\PC_LGBMClassifier_BayesSearchCV.model")
 
-if res == "SVM":
-    model = joblib.load("ML_models\\SVM(SGD-Hinge)-tuned.joblib")
+    if res == "Bagging_Decision_tree":
+        model = joblib.load("ML_models\\PC_BaggingClassifier_baseline.model")
 
-if res == "Vanila NN":
-    st.warning("Using the served TF model version 2....")
+    if res == "Vanilla_Net":
 
-    X = df.values[:5, :]
-    X = (X - X.mean()) / X.std()
+        btn = st.button("predict")
 
-    with st.spinner("Classifying...."):
-        preds = predict(X.tolist())
+        if btn:
+            with st.spinner("Making calls to the server model....."):
+                preds = []
 
-if model:
+                scaler = joblib.load("ML_models\\NN_scaler.scaler")
+                inst_scaled = scaler.transform(df.values)
 
-    btn = st.button("predict")
+                prog_bar = st.progress(0)
 
-    if res == "Random Forest":
-        X = df.values[:5, :]
+                for ins in inst_scaled[:5, :]:
+                    pred = predict(instances=ins.tolist())
+                    pred = pred["predictions"]
+                    idx = tf.argmax(pred, axis=1)
 
-    elif res == "SVM":
-        X = df.values[:5, :]
-        X = (X - X.mean()) / X.std()
+                    with st.spinner("Predicting....."):
+                        for i in range(100):
+                            prog_bar.progress(i + 1)
 
-    if btn:
-        with st.spinner("Classifying...."):
-            preds = model.predict(X)
+                    st.write(
+                        f"The predicted class is: {(idx.numpy()[0], idx2class[idx.numpy()[0]])}"
+                    )
 
-            for idx, pred in enumerate(preds):
-                st.write(
-                    f"The predicted class for instance is: {(pred, idx2class[pred])}"
-                )
+    if model:
+
+        btn = st.button("predict")
+
+        if res == "LightGBM":
+            X = df.values[:5, :]
+
+        elif res == "Bagging_Decision_tree":
+            X = df.values[:5, :]
+
+        if btn:
+            with st.spinner("Classifying...."):
+                preds = model.predict(X)
+
+                for idx, pred in enumerate(preds):
+                    st.write(
+                        f"The predicted class for instance is: {(pred, idx2class[pred])}"
+                    )

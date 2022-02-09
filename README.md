@@ -31,6 +31,8 @@ View the noteboks phase-wise following the links:
 
 ## Results
 
+### Basic Modelling
+
 - The best model we have is a *Light Gradient Boosting Classifer* on data with fixed imabalance. It has an accuracy of 93 % and a F1-score of 0.929
 
 <p align="center">
@@ -43,6 +45,15 @@ View the noteboks phase-wise following the links:
   <img src="ML_results/CF_LGBMClassifier.png">
 </p>
 
+### Advanced Modelling
+
+- I used a 2 layer NN with relu activation.
+
+<p align="center">
+  <img src="ML_results/CF_Vanilla_NN.png">
+</p>
+
+
 
 ## Serving the tensorflow model
 
@@ -50,9 +61,9 @@ You can directly serve the model and make api calls to get the predictions. Pre-
 
 - Pull the container: `docker pull tensorflow/serving`
 
-- Run the container: `docker run -it -v C:\Users\abhi0\Desktop\PGD_thesis:/DryBean -p 8605:8605 --entrypoint /bin/bash tensorflow/serving`
+- Run the container: `docker run -it -v <full-path-to-the-cloned-repo>\PGD_thesis:/DryBean -p 8605:8605 --entrypoint /bin/bash tensorflow/serving`
 
-- Inside the container, start the model server: `tensorflow_model_server --rest_api_port=8605 --model_name=dry_bean_model --model_base_path=/DryBean/models/best_model`
+- Inside the container, start the model server: `tensorflow_model_server --rest_api_port=8605 --model_name=dry_bean_model --model_base_path=/DryBean/models/`
 
 ## Using the app
 
