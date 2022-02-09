@@ -29,6 +29,15 @@ View the noteboks phase-wise following the links:
 - [Feature Selection & Modelling](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-3-Feature-Selection-and-Modelling%20.ipynb)
 - [Advanced Modelling](https://github.com/Abhiswain97/PGD_thesis/blob/master/Phase-4-TF-NN.ipynb)
 
+## Results
+
+- The best model we have is a *Light Gradient Boosting Classifer* on data with fixed imabalance. It has an accuracy of 93 % 
+- The second best model we have is a simple *Light Gradient Boosting Classifer* without any transforms. It has an accuracy of 92.72 %
+
+<p align="center">
+  <img src="ML_results/Confusion Matrix for Tuned LGBMClassifier.png">
+</p>
+
 
 ## Serving the tensorflow model
 
