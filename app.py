@@ -65,10 +65,10 @@ if file_uploader is not None:
     predictions = []
 
     if res == "LightGBM":
-        model = joblib.load("ML_models\\PC_LGBMClassifier_BayesSearchCV.model")
+        model = joblib.load("./ML_models/PC_LGBMClassifier_BayesSearchCV.model")
 
     if res == "Bagging_Decision_tree":
-        model = joblib.load("ML_models\\PC_BaggingClassifier_baseline.model")
+        model = joblib.load("./ML_models/PC_BaggingClassifier_baseline.model")
 
     if res == "Vanilla_Net":
 
@@ -77,7 +77,7 @@ if file_uploader is not None:
         if btn:
 
             with st.spinner("Making call to the served TF model....."):
-                scaler = joblib.load("ML_models\\NN_scaler.scaler")
+                scaler = joblib.load("./ML_models/NN_scaler.scaler")
                 inst_scaled = scaler.transform(df.values)
 
                 for i, ins in enumerate(inst_scaled):
