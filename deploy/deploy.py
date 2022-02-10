@@ -54,11 +54,18 @@ st.markdown("<h3><center>Upload test.csv file</center></h3>", unsafe_allow_html=
 
 file_uploader = st.file_uploader("")
 
+
+@st.cache
+def convert_df(df):
+    return df.to_csv().encode("utf-8")
+
+
 if file_uploader is not None:
     df = pd.read_csv(file_uploader)
 
     st.dataframe(data=df.head())
     model = None
+    predictions = []
 
     if res == "LightGBM":
         model = joblib.load("ML_models\\PC_LGBMClassifier_BayesSearchCV.model")
@@ -71,7 +78,6 @@ if file_uploader is not None:
         btn = st.button("predict")
 
         if btn:
-            predictions = []
 
             with st.spinner("Making call to the served TF model....."):
                 preds = []
@@ -79,20 +85,12 @@ if file_uploader is not None:
                 scaler = joblib.load("ML_models\\NN_scaler.scaler")
                 inst_scaled = scaler.transform(df.values)
 
-                prog_bar = st.progress(0.0)
-
                 for i, ins in enumerate(inst_scaled):
                     pred = predict(instances=ins.tolist())
                     pred = pred["predictions"]
                     idx = tf.argmax(pred, axis=1)
 
-                    prog_bar.progress(i + 1)
-
                     predictions.append(idx2class[idx.numpy()[0]])
-
-                    st.write(
-                        f"The predicted class is: {(idx.numpy()[0], idx2class[idx.numpy()[0]])}"
-                    )
 
     if model:
 
@@ -109,12 +107,17 @@ if file_uploader is not None:
                 preds = model.predict(X)
 
                 for idx, pred in enumerate(preds):
-                    # st.write(
-                    #     f"The predicted class for instance is: {(pred, idx2class[pred])}"
-                    # )
                     predictions.append(idx2class[pred])
 
-        pred_df = pd.DataFrame({"labels": predictions})
+    if len(predictions) != 0:
 
-        st.write("The predictions are: ")
+        pred_df = pd.DataFrame({"labels": predictions}).reset_index(drop=True)
+
+        st.success("Prediction complete for all instances")
         st.dataframe(pred_df)
+
+        csv = convert_df(pred_df)
+
+        st.download_button(
+            "Press to Download", csv, "preds.csv", "text/csv", key="download-csv"
+        )
