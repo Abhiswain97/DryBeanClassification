@@ -69,8 +69,11 @@ View the noteboks phase-wise following the links:
   - Optimizer: `Adam` with a `lr=3e-4`
   - loss: `SparseCategoricalCrossEntropy(logits=True)`
   - Epochs: 20
+<<<<<<< HEAD
 
 #### Without resampling: accuracy -> 91%, f1-score -> 0.93 
+=======
+>>>>>>> master
 
 <p align="center">
   <img src="ML_results/CF_Vanilla_NN.png">
