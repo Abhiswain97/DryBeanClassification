@@ -1,5 +1,11 @@
 # PGD_thesis
 
+### App is deployed at: [DryBeanClassifer](https://share.streamlit.io/abhiswain97/diploma_thesis/app.py). Check it out !
+
+- The app is deployed on share.streamlit.io.
+- For making predictions using the `Vanilla_Net`. The tensorflow model is served at heroku container services using tensorflow serving.
+- The app makes calls to the served model to get predictions.
+
 <p align="center">
   <img src="images/DryBeanApp.gif">
 </p>
@@ -81,20 +87,24 @@ View the noteboks phase-wise following the links:
   <img src="ML_results/CF_Vanilla_NN.png">
 </p>
 
-## Serving the tensorflow model
+## Using the app locally
+
+### Serving the tensorflow model
 
 You can directly serve the model and make api calls to get the predictions. Pre-requisite is just have docker installed
 
-- Pull the container: `docker pull tensorflow/serving`
+- Build the container `docker build -t app .`
 
-- Run the container: `docker run -it --rm -p 8601:8601 -v /mnt/c/Users/abhi0/Desktop/PGD_thesis/models:/models -e MODEL_NAME=saved_model -t tensorflow/serving`
+- Run the container: `docker run -p 8501:8501 -e PORT=8501 app`
   
-## Using the app
+### Making predictions
 
 - First, serve the model using the above instructions
 
 - Next, in another terminal first install the requirements using: `pip install -r requirements.txt`
 
-- Now just do: `streamlit run app.py`
+- The model is being served at `http://localhost:8501/saved_model`. To make predictions all you have to do is make calls to the endpoint: `http://localhost:8501/saved_model:predict`. A basic example of it is the `test_files/test_server.py`
+
+- you can just run it: `cd test_files && python test_server.py` or use it as a template for your own application.
 
 
