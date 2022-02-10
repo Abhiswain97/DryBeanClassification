@@ -58,7 +58,6 @@ if file_uploader is not None:
     df = pd.read_csv(file_uploader)
 
     st.dataframe(data=df.head())
-
     model = None
 
     if res == "LightGBM":
@@ -72,13 +71,15 @@ if file_uploader is not None:
         btn = st.button("predict")
 
         if btn:
+            predictions = []
+
             with st.spinner("Making call to the served TF model....."):
                 preds = []
 
                 scaler = joblib.load("ML_models\\NN_scaler.scaler")
                 inst_scaled = scaler.transform(df.values)
 
-                prog_bar = st.progress(0)
+                prog_bar = st.progress(0.0)
 
                 for i, ins in enumerate(inst_scaled):
                     pred = predict(instances=ins.tolist())
@@ -86,6 +87,8 @@ if file_uploader is not None:
                     idx = tf.argmax(pred, axis=1)
 
                     prog_bar.progress(i + 1)
+
+                    predictions.append(idx2class[idx.numpy()[0]])
 
                     st.write(
                         f"The predicted class is: {(idx.numpy()[0], idx2class[idx.numpy()[0]])}"
@@ -106,6 +109,12 @@ if file_uploader is not None:
                 preds = model.predict(X)
 
                 for idx, pred in enumerate(preds):
-                    st.write(
-                        f"The predicted class for instance is: {(pred, idx2class[pred])}"
-                    )
+                    # st.write(
+                    #     f"The predicted class for instance is: {(pred, idx2class[pred])}"
+                    # )
+                    predictions.append(idx2class[pred])
+
+        pred_df = pd.DataFrame({"labels": predictions})
+
+        st.write("The predictions are: ")
+        st.dataframe(pred_df)
