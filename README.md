@@ -70,7 +70,7 @@ View the noteboks phase-wise following the links:
   - loss: `SparseCategoricalCrossEntropy(logits=True)`
   - Epochs: 20
 
-#### Without resampling: accuracy -> 91%, f1-score -> 0.93 
+#### Without resampling: accuracy -> 92%, f1-score -> 0.94 
 
 <p align="center">
   <img src="ML_results/CF_Vanilla_NN.png">
