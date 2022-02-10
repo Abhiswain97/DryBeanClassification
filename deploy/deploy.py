@@ -80,7 +80,7 @@ if file_uploader is not None:
 
                 prog_bar = st.progress(0)
 
-                for ins in inst_scaled[:5, :]:
+                for ins in inst_scaled:
                     pred = predict(instances=ins.tolist())
                     pred = pred["predictions"]
                     idx = tf.argmax(pred, axis=1)

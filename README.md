@@ -89,7 +89,7 @@ You can directly serve the model and make api calls to get the predictions. Pre-
 ## Using the app
 
 <p align="center">
-  <img src="images/app.png">
+  <img src="images/app.gif">
 </p>
 
 
