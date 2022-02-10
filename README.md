@@ -1,5 +1,10 @@
 # PGD_thesis
 
+<p align="center">
+  <img src="images/app.gif">
+</p>
+
+
 ## What is the problem about?
 
   Dry bean is the most popular pulse produced in the world. The main problem dry bean
@@ -87,11 +92,6 @@ You can directly serve the model and make api calls to get the predictions. Pre-
 - Inside the container, start the model server: `tensorflow_model_server --rest_api_port=8605 --model_name=dry_bean_model --model_base_path=/DryBean/models/`
 
 ## Using the app
-
-<p align="center">
-  <img src="images/app.gif">
-</p>
-
 
 - First, serve the model using the above instructions
 
