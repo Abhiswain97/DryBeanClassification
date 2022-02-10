@@ -70,20 +70,11 @@ View the noteboks phase-wise following the links:
   - loss: `SparseCategoricalCrossEntropy(logits=True)`
   - Epochs: 20
 
-#### Without resampling: accuracy -> 92%, f1-score -> 0.94 
+- With or without resampling: accuracy -> 93%, f1-score -> 0.933 
 
 <p align="center">
   <img src="ML_results/CF_Vanilla_NN.png">
 </p>
-
-#### With resampling: accuracy -> 94%, f1-score -> 0.95 
-
-With resampling we even beat the paper. This is our best model
-
-<p align="center">
-  <img src="ML_results/CF_Vanilla_NN_sampled.png">
-</p>
-
 
 ## Serving the tensorflow model
 
