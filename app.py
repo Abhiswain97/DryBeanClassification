@@ -1,10 +1,7 @@
-from pyexpat import model
 from nbformat import write
 import streamlit as st
 import tensorflow as tf
 import requests
-import numpy as np
-from sklearn.preprocessing import StandardScaler
 import joblib
 import pandas as pd
 
@@ -14,7 +11,8 @@ def predict(instances):
     payload = {"instances": [instances]}
 
     res = requests.post(
-        url="http://localhost:8605/v1/models/dry_bean_model:predict", json=payload
+        url="https://drybeanapp.herokuapp.com/v1/models/saved_model:predict",
+        json=payload,
     )
 
     preds = res.json()
@@ -32,7 +30,7 @@ idx2class = {
 }
 
 st.sidebar.markdown(
-    "<h1><center>Dry bean classifier</center></h1>", unsafe_allow_html=True
+    "<h1><center>Dry Bean Classifier</center></h1>", unsafe_allow_html=True
 )
 
 res = st.sidebar.selectbox(
@@ -80,13 +78,12 @@ if file_uploader is not None:
         if btn:
 
             with st.spinner("Making call to the served TF model....."):
-                preds = []
-
                 scaler = joblib.load("ML_models\\NN_scaler.scaler")
                 inst_scaled = scaler.transform(df.values)
 
                 for i, ins in enumerate(inst_scaled):
                     pred = predict(instances=ins.tolist())
+
                     pred = pred["predictions"]
                     idx = tf.argmax(pred, axis=1)
 

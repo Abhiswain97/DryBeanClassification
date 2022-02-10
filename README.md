@@ -87,16 +87,14 @@ You can directly serve the model and make api calls to get the predictions. Pre-
 
 - Pull the container: `docker pull tensorflow/serving`
 
-- Run the container: `docker run -it -v <full-path-to-the-cloned-repo>\PGD_thesis:/DryBean -p 8605:8605 --entrypoint /bin/bash tensorflow/serving`
-
-- Inside the container, start the model server: `tensorflow_model_server --rest_api_port=8605 --model_name=dry_bean_model --model_base_path=/DryBean/models/`
-
+- Run the container: `docker run -it --rm -p 8601:8601 -v /mnt/c/Users/abhi0/Desktop/PGD_thesis/models:/models -e MODEL_NAME=saved_model -t tensorflow/serving`
+  
 ## Using the app
 
 - First, serve the model using the above instructions
 
 - Next, in another terminal first install the requirements using: `pip install -r requirements.txt`
 
-- Now just do: `streamlit run deploy\deploy.py`
+- Now just do: `streamlit run app.py`
 
 
