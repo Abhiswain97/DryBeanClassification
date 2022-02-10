@@ -72,7 +72,7 @@ if file_uploader is not None:
         btn = st.button("predict")
 
         if btn:
-            with st.spinner("Making calls to the server model....."):
+            with st.spinner("Making call to the served TF model....."):
                 preds = []
 
                 scaler = joblib.load("ML_models\\NN_scaler.scaler")
@@ -80,14 +80,12 @@ if file_uploader is not None:
 
                 prog_bar = st.progress(0)
 
-                for ins in inst_scaled:
+                for i, ins in enumerate(inst_scaled):
                     pred = predict(instances=ins.tolist())
                     pred = pred["predictions"]
                     idx = tf.argmax(pred, axis=1)
 
-                    with st.spinner("Predicting....."):
-                        for i in range(100):
-                            prog_bar.progress(i + 1)
+                    prog_bar.progress(i + 1)
 
                     st.write(
                         f"The predicted class is: {(idx.numpy()[0], idx2class[idx.numpy()[0]])}"
@@ -98,10 +96,10 @@ if file_uploader is not None:
         btn = st.button("predict")
 
         if res == "LightGBM":
-            X = df.values[:5, :]
+            X = df.values
 
         elif res == "Bagging_Decision_tree":
-            X = df.values[:5, :]
+            X = df.values
 
         if btn:
             with st.spinner("Classifying...."):
