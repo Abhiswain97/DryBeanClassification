@@ -1,7 +1,7 @@
 # PGD_thesis
 
 <p align="center">
-  <img src="images/app.gif">
+  <img src="images/DryBeanApp.gif">
 </p>
 
 
