@@ -39,7 +39,22 @@ View the noteboks phase-wise following the links:
   <img src="ML_results/CF_Transformed_Tuned_LGBMClassifier.png">
 </p>
 
-- The second best model we have is a simple *Light Gradient Boosting Classifer* without any transforms. It has an accuracy of 92.72 % and a f1-score of 0.927
+- The second best model we have is a simple *Light Gradient Boosting Classifer* without any transforms tuned using Bayesian optimization for 25 iterations, to optimize `f1(weighted)` 
+  ```
+  {
+    "bagging_fraction": 0.740705467313804,
+    "bagging_freq": 2,
+    "feature_fraction": 0.768581357957563,
+    "learning_rate": 0.07351087677623395,
+    "min_child_samples": 8,
+    "min_split_gain": 0.308079603643812,
+    "n_estimators": 132,
+    "num_leaves": 109,
+    "reg_alpha": 2.878849039397276,
+    "reg_lambda": 2.7700803937357488e-08
+  }
+  ```
+- It has an accuracy of 92.72 % and a f1-score of 0.927 
 
 <p align="center">
   <img src="ML_results/CF_LGBMClassifier.png">
@@ -48,11 +63,26 @@ View the noteboks phase-wise following the links:
 ### Advanced Modelling
 
 - I used a 2 layer NN with relu activation.
+  - The first hidden layer has 512 nodes
+  - The second one has 256 nodes
+  - Both the layers use `relu` activation
+  - Optimizer: `Adam` with a `lr=3e-4`
+  - loss: `SparseCategoricalCrossEntropy(logits=True)`
+  - Epochs: 20
+
+#### Without resampling: accuracy -> 91%, f1-score -> 0.93 
 
 <p align="center">
   <img src="ML_results/CF_Vanilla_NN.png">
 </p>
 
+#### With resampling: accuracy -> 94%, f1-score -> 0.95 
+
+With resampling we even beat the paper. This is our best model
+
+<p align="center">
+  <img src="ML_results/CF_Vanilla_NN_sampled.png">
+</p>
 
 
 ## Serving the tensorflow model
