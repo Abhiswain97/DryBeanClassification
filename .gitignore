@@ -22,3 +22,5 @@ pytorchlightning/
 .vscode/
 
 *.log
+
+*.tmp

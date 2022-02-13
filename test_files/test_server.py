@@ -43,7 +43,6 @@ if __name__ == "__main__":
         pred = predict(instances=ins.tolist())
         pred = pred["predictions"]
         idx = tf.argmax(pred, axis=1)
-
         predictions.append(idx2class[idx.numpy()[0]])
 
     print(predictions)
