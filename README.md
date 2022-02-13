@@ -1,4 +1,4 @@
-# PGD_thesis
+# Diploma Thesis
 
 ### App is deployed at: [DryBeanClassifer](https://share.streamlit.io/abhiswain97/diploma_thesis/app.py). Check it out !
 
