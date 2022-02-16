@@ -1,8 +1,10 @@
+from nbformat import write
 import streamlit as st
 import tensorflow as tf
 import requests
 import joblib
 import pandas as pd
+import numpy as np
 
 
 def predict(instances):
@@ -63,6 +65,7 @@ if file_uploader is not None:
     st.dataframe(data=df.head())
     model = None
     predictions = []
+    confs = []
 
     if res == "LightGBM":
         model = joblib.load("./ML_models/PC_LGBMClassifier_BayesSearchCV.model")
@@ -84,9 +87,16 @@ if file_uploader is not None:
                     pred = predict(instances=ins.tolist())
 
                     pred = pred["predictions"]
+
+                    confidence = tf.nn.softmax(pred[0])
+
                     idx = tf.argmax(pred, axis=1)
 
-                    predictions.append(idx2class[idx.numpy()[0]])
+                    predictions.append(
+                        idx2class[idx.numpy()[0]] 
+                    )
+
+                    confs.append(np.max(confidence) * 100)
 
     if model:
 
@@ -107,11 +117,12 @@ if file_uploader is not None:
 
     if len(predictions) != 0:
 
-        pred_df = pd.DataFrame({"labels": predictions}).reset_index(drop=True)
+        pred_df = pd.DataFrame(
+            {"labels": predictions, "confidence": confs}
+        ).reset_index(drop=True)
 
         st.success("Prediction complete for all instances")
         st.dataframe(pred_df)
-
         csv = convert_df(pred_df)
 
         st.download_button(
