@@ -1,3 +1,4 @@
+from email.mime import base
 import streamlit as st
 import tensorflow as tf
 import requests
@@ -54,6 +55,8 @@ def pred_NN(X):
 
 def load_model(model_name="LGBM"):
     base_path = Path(__file__).parents[1]
+    st.write(base_path)
+
     model = None
     if model_name == "LightGBM":
         model = joblib.load(
