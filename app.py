@@ -65,30 +65,20 @@ def load_model(model_name="LGBM"):
         model_link = r"https://github.com/Abhiswain97/Diploma_thesis/raw/master/ML_models/PC_LGBMClassifier_BayesSearchCV.model"
         res = requests.get(model_link)
 
-        if Path("temp").exists():
-            with open("temp/LGBM.model", "wb") as f:
-                f.write(res.content)
-        else:
-            os.mkdir("temp")
-            with open("temp/LGBM.model", "wb") as f:
-                f.write(res.content)
+        with open("LGBM.model", "wb") as f:
+            f.write(res.content)
 
-        model = joblib.load("temp/LGBM.model")
+        model = joblib.load("LGBM.model")
 
     elif model_name == "Ensemble-DT":
 
         model_link = r"https://github.com/Abhiswain97/Diploma_thesis/raw/master/ML_models/PC_BaggingClassifier_baseline.model"
         res = requests.get(model_link)
 
-        if Path("temp").exists():
-            with open("temp/DT.model", "wb") as f:
-                f.write(res.content)
-        else:
-            os.mkdir("temp")
-            with open("temp/DT.model", "wb") as f:
-                f.write(res.content)
+        with open("DT.model", "wb") as f:
+            f.write(res.content)
 
-        model = joblib.load("temp/DT.model")
+        model = joblib.load("DT.model")
 
     else:
         raise NotImplementedError("Model not implemented")
