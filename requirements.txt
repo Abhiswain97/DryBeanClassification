@@ -7,3 +7,4 @@ scikit_optimize==0.9.0
 seaborn==0.11.2
 streamlit==1.4.0
 tensorflow==2.7.0
+scikit-learn==1.0.2

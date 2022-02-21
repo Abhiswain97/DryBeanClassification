@@ -19,7 +19,6 @@ idx2class = {
 }
 
 
-@st.cache
 def pred_NN(X):
     predictions = []
     confs = []
@@ -53,7 +52,6 @@ def pred_NN(X):
         return pred_df
 
 
-@st.cache
 def load_model(model_name="LGBM"):
     model = None
     if model_name == "LightGBM":
