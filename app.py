@@ -4,7 +4,7 @@ import requests
 import joblib
 import pandas as pd
 import numpy as np
-
+from pathlib import Path
 
 st.set_page_config(page_title="Dry Bean app", layout="wide")
 
@@ -53,11 +53,16 @@ def pred_NN(X):
 
 
 def load_model(model_name="LGBM"):
+    base_path = Path(__file__).parents[1]
     model = None
     if model_name == "LightGBM":
-        model = joblib.load("ML_models/PC_LGBMCLassifier_BayesSearchCV.model")
+        model = joblib.load(
+            f"{base_path}/ML_models/PC_LGBMCLassifier_BayesSearchCV.model"
+        )
     elif model_name == "Ensemble-DT":
-        model = joblib.load("ML_models/PC_LGBMCLassifier_BayesSearchCV.model")
+        model = joblib.load(
+            f"{base_path}/ML_models/PC_LGBMCLassifier_BayesSearchCV.model"
+        )
     else:
         raise NotImplementedError("Model not implemented")
 
