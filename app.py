@@ -1,4 +1,6 @@
 from email.mime import base
+import os
+import re
 import streamlit as st
 import tensorflow as tf
 import requests
@@ -54,19 +56,40 @@ def pred_NN(X):
 
 
 def load_model(model_name="LGBM"):
+
     base_path = Path(__file__).parents[0]
     model = None
 
     if model_name == "LightGBM":
 
-        path = base_path / "ML_models/PC_LGBMCLassifier_BayesSearchCV.model"
+        model_link = r"https://github.com/Abhiswain97/Diploma_thesis/raw/master/ML_models/PC_LGBMClassifier_BayesSearchCV.model"
+        res = requests.get(model_link)
 
-        model = joblib.load(path)
+        if Path("temp").exists():
+            with open("temp/LGBM.model", "wb") as f:
+                f.write(res.content)
+        else:
+            os.mkdir("temp")
+            with open("temp/LGBM.model", "wb") as f:
+                f.write(res.content)
+
+        model = joblib.load("temp/LGBM.model")
+
     elif model_name == "Ensemble-DT":
 
-        path = base_path / "ML_models/PC_BaggingClassifier_BayesSearchCV.model"
+        model_link = r"https://github.com/Abhiswain97/Diploma_thesis/raw/master/ML_models/PC_BaggingClassifier_baseline.model"
+        res = requests.get(model_link)
 
-        model = joblib.load(path)
+        if Path("temp").exists():
+            with open("temp/DT.model", "wb") as f:
+                f.write(res.content)
+        else:
+            os.mkdir("temp")
+            with open("temp/DT.model", "wb") as f:
+                f.write(res.content)
+
+        model = joblib.load("temp/DT.model")
+
     else:
         raise NotImplementedError("Model not implemented")
 
