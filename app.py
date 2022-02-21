@@ -60,10 +60,12 @@ def load_model(model_name="LGBM"):
     model = None
     if model_name == "LightGBM":
         model = joblib.load(
-            base_path / "ML_models/PC_LGBMCLassifier_BayesSearchCV.model"
+            base_path / "Diploma_thesis/ML_models/PC_LGBMCLassifier_BayesSearchCV.model"
         )
     elif model_name == "Ensemble-DT":
-        model = joblib.load(base_path / "ML_models/PC_BaggingClassifier_baseline.model")
+        model = joblib.load(
+            base_path / "Diploam_thesis/ML_models/PC_BaggingClassifier_baseline.model"
+        )
     else:
         raise NotImplementedError("Model not implemented")
 
