@@ -87,7 +87,7 @@ View the noteboks phase-wise following the links:
   <img src="ML_results/CF_Vanilla_NN.png">
 </p>
 
-## Using the app locally
+## Using the the served model locally
 
 ### Serving the tensorflow model
 
@@ -107,4 +107,8 @@ You can directly serve the model and make api calls to get the predictions. Pre-
 
 - you can just run it: `cd test_files && python test_server.py` or use it as a template for your own application.
 
+## Using the app locally
 
+- Install all the requirements: `pip install -r requirements.txt`
+
+- Now, just do: `streamlit run app.py` and voila it's up on local host! 
