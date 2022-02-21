@@ -55,7 +55,7 @@ def pred_NN(X):
         return pred_df
 
 
-def load_model(model_name="LGBM"):
+def load_model(model_name):
 
     base_path = Path(__file__).parents[0]
     model = None
