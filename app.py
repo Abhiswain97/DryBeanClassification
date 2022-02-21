@@ -55,9 +55,9 @@ def pred_NN(X):
 def load_model(model_name="LGBM"):
     model = None
     if model_name == "LightGBM":
-        model = joblib.load("./ML_models/PC_LGBMCLassifier_BayesSearchCV.model")
+        model = joblib.load("ML_models/PC_LGBMCLassifier_BayesSearchCV.model")
     elif model_name == "Ensemble-DT":
-        model = joblib.load("./ML_models/PC_LGBMCLassifier_BayesSearchCV.model")
+        model = joblib.load("ML_models/PC_LGBMCLassifier_BayesSearchCV.model")
     else:
         raise NotImplementedError("Model not implemented")
 
