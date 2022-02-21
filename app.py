@@ -54,18 +54,19 @@ def pred_NN(X):
 
 
 def load_model(model_name="LGBM"):
-    base_path = Path(__file__).parents[1]
-    st.write(base_path)
-
+    base_path = Path(__file__).parents[0]
     model = None
+
     if model_name == "LightGBM":
-        model = joblib.load(
-            base_path / "Diploma_thesis/ML_models/PC_LGBMCLassifier_BayesSearchCV.model"
-        )
+
+        path = base_path / "ML_models/PC_LGBMCLassifier_BayesSearchCV.model"
+
+        model = joblib.load(path)
     elif model_name == "Ensemble-DT":
-        model = joblib.load(
-            base_path / "Diploam_thesis/ML_models/PC_BaggingClassifier_baseline.model"
-        )
+
+        path = base_path / "ML_models/PC_BaggingClassifier_BayesSearchCV.model"
+
+        model = joblib.load(path)
     else:
         raise NotImplementedError("Model not implemented")
 
