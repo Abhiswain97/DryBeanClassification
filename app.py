@@ -5,6 +5,9 @@ import joblib
 import pandas as pd
 import numpy as np
 
+
+st.set_page_config(page_title="Dry Bean app", layout="wide")
+
 idx2class = {
     0: "BARBUNYA",
     1: "BOMBAY",
@@ -174,7 +177,7 @@ if pred_type == "Single":
                 pred_df = predict(feats=[feats], model=model)
 
                 st.markdown(
-                    f"<h2><center>The predicted class is: {pred_df.labels.values[0]}</center></h2>",
+                    f"<h2><center>The predicted class is: {pred_df.labels.values[0]} with a confidence of: {pred_df.confidence[0]}</center></h2>",
                     unsafe_allow_html=True,
                 )
 
