@@ -1,6 +1,4 @@
-from email.mime import base
-import os
-import re
+from textwrap import indent
 import streamlit as st
 import tensorflow as tf
 import requests
@@ -9,7 +7,23 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-st.set_page_config(page_title="Dry Bean app", layout="wide")
+st.set_page_config(
+    page_title="Dry Bean app",
+    page_icon=":seedling:",
+    layout="wide",
+)
+
+
+st.sidebar.image("images/Beans.png")
+# Hide hamburger icon and made with streamlit
+
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 idx2class = {
     0: "BARBUNYA",
@@ -109,11 +123,13 @@ def predict(feats, model):
 st.sidebar.title("Dry Bean Classifier")
 
 # Type of predicition
-pred_type = st.sidebar.selectbox("Type of predition", options=["Single", "Batch"])
+pred_type = st.sidebar.selectbox(
+    "Type of predition", options=["Single", "Batch"], index=0
+)
 
 # Choose model
 model_type = st.sidebar.selectbox(
-    "Choose Model", options=["LightGBM", "Ensemble-DT", "Vanilla-Net"]
+    "Choose Model", options=["LightGBM", "Ensemble-DT", "Vanilla-Net"], index=0
 )
 
 st.sidebar.markdown(
