@@ -112,3 +112,9 @@ You can directly serve the model and make api calls to get the predictions. Pre-
 - Install all the requirements: `pip install -r requirements.txt`
 
 - Now, just do: `streamlit run app.py` and voila it's up on local host! 
+
+
+## References
+
+- [Multiclass classification of dry beans using computer vision and machine learning techniques](https://www.sciencedirect.com/science/article/abs/pii/S0168169919311573)
+- [Dry Beans Classification Using Machine Learning](http://ceur-ws.org/Vol-2951/paper3.pdf)
