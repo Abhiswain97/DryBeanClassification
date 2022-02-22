@@ -7,7 +7,7 @@
 - The app makes calls to the served model to get predictions.
 
 <p align="center">
-  <img src="images/MyApp.gif">
+  <img src="images/App.gif">
 </p>
 
 
