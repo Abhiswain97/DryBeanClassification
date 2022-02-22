@@ -228,7 +228,7 @@ else:
         "<h3><center>Upload test.csv file</center></h3>", unsafe_allow_html=True
     )
 
-    url = "https://github.com/Abhiswain97/Diploma_thesis/blob/master/test_files/full_feats_test.csv"
+    url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test.csv"
     st.markdown(
         f"<center><i>For testing the batch prediciton module download the csv file from <a href={url}>here</a><center> and upload it</i></center>",
         unsafe_allow_html=True,
