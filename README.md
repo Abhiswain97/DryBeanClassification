@@ -1,6 +1,6 @@
 # Diploma Thesis
 
-### App is deployed at: [DryBeanClassifer](https://share.streamlit.io/abhiswain97/diploma_thesis/app.py). Check it out !
+### App is deployed at: [DryBeanClassifer](https://share.streamlit.io/abhiswain97/drybeanclassification/app.py). Check it out !
 
 - The app is deployed on share.streamlit.io.
 - For making predictions using the `Vanilla_Net`, the tensorflow model is served at heroku container services using tensorflow serving.
