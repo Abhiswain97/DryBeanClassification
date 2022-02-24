@@ -4,7 +4,6 @@ import requests
 import joblib
 import pandas as pd
 import numpy as np
-from pathlib import Path
 
 st.set_page_config(
     page_title="Dry Bean app",
@@ -35,6 +34,7 @@ idx2class = {
 }
 
 
+@st.cache
 def pred_NN(X):
     predictions = []
     confs = []
@@ -68,6 +68,7 @@ def pred_NN(X):
         return pred_df
 
 
+@st.cache
 def load_model(model_name):
 
     model = None
@@ -98,6 +99,7 @@ def load_model(model_name):
     return model
 
 
+@st.cache
 def predict(feats, model):
     predictions = []
     probs = []
