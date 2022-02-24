@@ -11,17 +11,7 @@ st.set_page_config(
     layout="wide",
 )
 
-
 st.sidebar.image("images/Beans.png")
-# Hide hamburger icon and made with streamlit
-
-hide_streamlit_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 idx2class = {
     0: "BARBUNYA",
