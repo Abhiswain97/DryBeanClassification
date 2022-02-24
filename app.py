@@ -58,7 +58,6 @@ def pred_NN(X):
         return pred_df
 
 
-@st.cache
 def load_model(model_name):
 
     model = None
