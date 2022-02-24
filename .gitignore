@@ -24,3 +24,5 @@ pytorchlightning/
 *.log
 
 *.tmp
+
+LGBM.model

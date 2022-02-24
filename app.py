@@ -1,4 +1,3 @@
-from textwrap import indent
 import streamlit as st
 import tensorflow as tf
 import requests
@@ -71,7 +70,6 @@ def pred_NN(X):
 
 def load_model(model_name):
 
-    base_path = Path(__file__).parents[0]
     model = None
 
     if model_name == "LightGBM":
@@ -139,12 +137,14 @@ st.sidebar.markdown(
 pred_df = pd.DataFrame()
 
 # Single prediction done using a form
+model = None
 
 if pred_type == "Single":
 
     with st.form("Dry Bean Classification", clear_on_submit=True):
         st.markdown(
-            "<h1><center>Enter Feature Values</center></h1>", unsafe_allow_html=True
+            "<h1><center>Enter Feature values</center></h1>",
+            unsafe_allow_html=True,
         )
 
         r1 = st.columns(4)
@@ -198,24 +198,46 @@ if pred_type == "Single":
             ShapeFactor4,
         ]
 
-        feats = [float(feat) for feat in feats]
-
         if submit_res:
-            if model_type == "Vanilla-Net":
-                pred_df = pred_NN(X=[feats])
-                st.markdown(
-                    f"<h2><center>The predicted class is: {pred_df.labels[0]} with a confidence of: {pred_df.confidence[0]}</center></h2>",
-                    unsafe_allow_html=True,
-                )
+            count = 0
+            for feat in feats:
+                if feat == "":
+                    count += 1
 
+            if count != 0:
+                st.error(
+                    "One or more fields are left blank! Filling it with default value!"
+                )
             else:
-                model = load_model(model_name=model_type)
-                pred_df = predict(feats=[feats], model=model)
+                try:
+                    feats = [float(feat) for feat in feats]
+                except:
+                    st.error(
+                        "Only int or float values are allowed! Filling with default values!"
+                    )
+                    st.stop()
 
-                st.markdown(
-                    f"<h2><center>The predicted class is: {pred_df.labels.values[0]} with a confidence of: {pred_df.confidence[0]}</center></h2>",
-                    unsafe_allow_html=True,
-                )
+                if model_type == "Vanilla-Net":
+                    pred_df = pred_NN(X=[feats])
+                    st.markdown(
+                        f"<h2><center>The predicted class is: {pred_df.labels[0]} with a confidence of: {pred_df.confidence[0]}</center></h2>",
+                        unsafe_allow_html=True,
+                    )
+
+                else:
+                    try:
+                        model = load_model(model_name=model_type)
+                    except:
+                        print("Reloading model")
+                    finally:
+                        model = load_model(model_name=model_type)
+
+                    pred_df = predict(feats=[feats], model=model)
+
+                    st.markdown(
+                        f"<h2><center>The predicted class is: {pred_df.labels.values[0]} with a confidence of: {pred_df.confidence[0]}</center></h2>",
+                        unsafe_allow_html=True,
+                    )
 
     if len(pred_df) != 0:
         csv = pred_df.to_csv(index=False)
@@ -250,7 +272,13 @@ else:
 
                 st.dataframe(pred_df)
             else:
-                model = load_model(model_name=model_type)
+                try:
+                    model = load_model(model_name=model_type)
+                except:
+                    print("Reloading model")
+                finally:
+                    model = load_model(model_name=model_type)
+
                 pred_df = predict(feats=df.values, model=model)
 
                 st.dataframe(pred_df)
