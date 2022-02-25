@@ -29,7 +29,7 @@ def pred_NN(X):
     predictions = []
     confs = []
 
-    with st.spinner("Making call to the served TF model....."):
+    with st.spinner("Using the served TF model........"):
         scaler = joblib.load("./ML_models/NN_scaler.scaler")
         inst_scaled = scaler.transform(X)
 
@@ -51,7 +51,7 @@ def pred_NN(X):
 
             predictions.append(idx2class[idx.numpy()[0]])
 
-            confs.append(np.max(confidence) * 100)
+            confs.append(round(np.max(confidence) * 100, 2))
 
             pred_df = pd.DataFrame({"labels": predictions, "confidence": confs})
 
@@ -85,7 +85,7 @@ def predict(feats, model):
         prob = model.predict_proba(feats)
         for idx, pred in enumerate(preds):
             predictions.append(idx2class[pred])
-            probs.append(np.max(prob) * 100)
+            probs.append(round(np.max(prob) * 100, 2))
 
     pred_df = pd.DataFrame({"labels": predictions, "confidence": probs})
 
@@ -106,7 +106,7 @@ pred_type = st.sidebar.selectbox(
 
 # Choose model
 model_type = st.sidebar.selectbox(
-    "Choose Model", options=["LightGBM", "Ensemble-DT", "Vanilla-Net"], index=0
+    "Choose Model", options=["LightGBM", "Ensemble-DT", "Vanilla-Net"], index=2
 )
 
 st.sidebar.markdown(
@@ -199,7 +199,7 @@ if pred_type == "Single":
                 if model_type == "Vanilla-Net":
                     pred_df = pred_NN(X=[feats])
                     st.markdown(
-                        f"<h2><center>The predicted class is: {pred_df.labels[0]} with a confidence of: {pred_df.confidence[0]}</center></h2>",
+                        f"<h2><center>The predicted class is: {pred_df.labels[0]} with a confidence of: {round(pred_df.confidence[0], 2)}%</center></h2>",
                         unsafe_allow_html=True,
                     )
 
@@ -214,7 +214,7 @@ if pred_type == "Single":
                     pred_df = predict(feats=[feats], model=model)
 
                     st.markdown(
-                        f"<h2><center>The predicted class is: {pred_df.labels.values[0]} with a confidence of: {pred_df.confidence[0]}</center></h2>",
+                        f"<h2><center>The predicted class is: {pred_df.labels.values[0]} with a confidence of: {round(pred_df.confidence[0], 2)}%</center></h2>",
                         unsafe_allow_html=True,
                     )
 
