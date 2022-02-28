@@ -1,0 +1,18 @@
++--------------------+-------------------------------------------------------------+
+|      Methods       |                      Features Selected                      |
++--------------------+-------------------------------------------------------------+
+|      Variance      | ['Area', 'Perimeter', 'MajorAxisLength', 'MinorAxisLength', |
+|    Thresholding    |        'AspectRation', 'Eccentricity', 'ConvexArea',        |
+|  (threshold = 1)   |    'EquivDiameter', 'Extent', 'roundness', 'Compactness',   |
+|                    |       'ShapeFactor1', 'ShapeFactor2', 'ShapeFactor3']       |
+|    ANOVA F-test    | ['Area', 'Perimeter', 'MajorAxisLength', 'MinorAxisLength', |
+|                    |        'ConvexArea', 'EquivDiameter', 'ShapeFactor1',       |
+|                    |                       'ShapeFactor2']                       |
+| Recursive Feature  |     ['Perimeter', 'MajorAxisLength', 'MinorAxisLength',     |
+|    Elimination     | 'roundness', 'Compactness', 'ShapeFactor1', 'ShapeFactor3', |
+| (estimator = Decis |                       'ShapeFactor4']                       |
+| ionTreeClassifier) |                                                             |
+| Using RandomForest |     ['Perimeter', 'MajorAxisLength', 'MinorAxisLength',     |
+| feature importance |       'AspectRation', 'EquivDiameter', 'Compactness',       |
+|                    |               'ShapeFactor1', 'ShapeFactor3']               |
++--------------------+-------------------------------------------------------------+
