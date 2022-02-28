@@ -44,31 +44,40 @@ View the noteboks phase-wise following the links:
 
 ### Basic Modelling
 
-- The best model we have is a *Light Gradient Boosting Classifer* on data with fixed imabalance. It has an accuracy of 93 % and a F1-score of 0.929
-
-<p align="center">
-  <img src="ML_results/CF_Transformed_Tuned_LGBMClassifier.png">
-</p>
-
-- The second best model we have is a simple *Light Gradient Boosting Classifer* without any transforms tuned using Bayesian optimization for 25 iterations, to optimize `f1(weighted)` 
+- The best model we have is a Tuned - *Light Gradient Boosting Classifer* without any preprocessing on the data. It has an accuracy of 93 % and a F1-score of 0.929
+- The best parameters are found with RandomizedSearchCV: 
   ```
   {
-    "bagging_fraction": 0.740705467313804,
-    "bagging_freq": 2,
-    "feature_fraction": 0.768581357957563,
-    "learning_rate": 0.07351087677623395,
-    "min_child_samples": 8,
-    "min_split_gain": 0.308079603643812,
-    "n_estimators": 132,
-    "num_leaves": 109,
-    "reg_alpha": 2.878849039397276,
-    "reg_lambda": 2.7700803937357488e-08
+    'boosting_type': 'gbdt',
+    'class_weight': None,
+    'colsample_bytree': 1.0,
+    'importance_type': 'split',
+    'learning_rate': 0.05,
+    'max_depth': -1,
+    'min_child_samples': 31,
+    'min_child_weight': 0.001,
+    'min_split_gain': 0.2,
+    'n_estimators': 200,
+    'n_jobs': -1,
+    'num_leaves': 90,
+    'objective': None,
+    'random_state': 8144,
+    'reg_alpha': 0.7,
+    'reg_lambda': 0.4,
+    'silent': 'warn',
+    'subsample': 1.0,
+    'subsample_for_bin': 200000,
+    'subsample_freq': 0,
+    'feature_fraction': 0.4,
+    'bagging_freq': 0,
+    'bagging_fraction': 1.0
   }
   ```
-- It has an accuracy of 92.72 % and a f1-score of 0.927 
+
+Confusion Matrix for Tuned-LightGBM:
 
 <p align="center">
-  <img src="ML_results/CF_LGBMClassifier.png">
+  <img src="ML_results/CF_Tuned_LightGBM_without_trans.png">
 </p>
 
 ### Advanced Modelling
@@ -82,6 +91,8 @@ View the noteboks phase-wise following the links:
   - Epochs: 20
 
 - With or without resampling: accuracy -> 93%, f1-score -> 0.933 
+
+Confusion Matrix for Vanilla-Net
 
 <p align="center">
   <img src="ML_results/CF_Vanilla_NN.png">

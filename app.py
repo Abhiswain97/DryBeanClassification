@@ -64,11 +64,7 @@ def load_model(model_name):
 
     if model_name == "LightGBM":
 
-        model = joblib.load("./ML_models/PC_LGBMClassifier_BayesSearchCV.model")
-
-    elif model_name == "Ensemble-DT":
-
-        model = joblib.load("./ML_models/PC_BaggingClassifier_baseline.model")
+        model = joblib.load("./ML_models/Tuned_LightGBM_without_trans.model")
 
     else:
         raise NotImplementedError("Model not implemented")
@@ -106,7 +102,7 @@ pred_type = st.sidebar.selectbox(
 
 # Choose model
 model_type = st.sidebar.selectbox(
-    "Choose Model", options=["LightGBM", "Ensemble-DT", "Vanilla-Net"], index=2
+    "Choose Model", options=["LightGBM", "Vanilla-Net"], index=0
 )
 
 st.sidebar.markdown(
