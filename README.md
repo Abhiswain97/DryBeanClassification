@@ -90,12 +90,14 @@ Confusion Matrix for Tuned-LightGBM:
   - loss: `SparseCategoricalCrossEntropy(logits=True)`
   - Epochs: 20
 
-- With or without resampling: accuracy -> 93%, f1-score -> 0.933 
+- Without resampling: accuracy -> 93.09%, f1-score -> 0.9304 
+
+> With resampling (Oversampling with SMOTE) We even beat the best accuracy and f1-score in the paper with an accuracy of **93.39%** & f1-score of **0.9340**
 
 Confusion Matrix for Vanilla-Net
 
 <p align="center">
-  <img src="ML_results/CF_Vanilla_NN.png">
+  <img src="ML_results/Confusion_Matrix_Vanilla_Net_SMOTE.png">
 </p>
 
 ## Using the the served model locally
