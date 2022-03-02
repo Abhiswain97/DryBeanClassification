@@ -97,7 +97,7 @@ Confusion Matrix for Tuned-LightGBM:
 Confusion Matrix for Vanilla-Net
 
 <p align="center">
-  <img src="ML_results/Confusion_Matrix_Vanilla_Net_SMOTE.png">
+  <img src="https://raw.githubusercontent.com/Abhiswain97/DryBeanClassification/master/ML_results/Confusion_matrix_Vanilla_Net_SMOTE.png">
 </p>
 
 ## Using the the served model locally
