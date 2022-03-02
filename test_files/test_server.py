@@ -9,7 +9,7 @@ def predict(instances):
     payload = {"instances": [instances]}
 
     res = requests.post(
-        url="http://localhost:8501/v1/models/saved_model:predict",
+        url="https://drybeanapp.herokuapp.com/v1/models/saved_model:predict",
         json=payload,
     )
 

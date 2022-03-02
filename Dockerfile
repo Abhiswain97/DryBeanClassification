@@ -10,4 +10,4 @@ RUN chmod +x /usr/bin/tf_serving_entrypoint.sh
 
 ENTRYPOINT []
 
-CMD [ "/usr/bin/tf_serving_entrypoint.sh" ]
+CMD [ "sh", "/usr/bin/tf_serving_entrypoint.sh" ]
