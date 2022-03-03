@@ -59,25 +59,9 @@ def pred_NN(X):
 
         end = time.time()
 
-        st.success(
-            f"Prediction Complete for all instances in {round(end-start, 2)} secs"
-        )
+        st.success(f"Prediction done in: {round(end-start, 2)}s")
 
         return pred_df
-
-
-def load_model(model_name):
-
-    model = None
-
-    if model_name == "LightGBM":
-
-        model = joblib.load("./ML_models/Tuned_LightGBM_without_trans.model")
-
-    else:
-        raise NotImplementedError("Model not implemented")
-
-    return model
 
 
 @st.cache(suppress_st_warning=True)
@@ -85,14 +69,18 @@ def predict(feats, model):
     predictions = []
     probs = []
 
+    start = time.time()
+
     with st.spinner("Classifying...."):
         preds = model.predict(feats)
         prob = model.predict_proba(feats)
-        for idx, pred in enumerate(preds):
+        for pred in preds:
             predictions.append(idx2class[pred])
             probs.append(round(np.max(prob) * 100, 2))
 
-    st.success(f"Prediction Complete for all instances")
+    end = time.time()
+
+    st.success(f"Prediction done in: {round(end-start, 2)}s")
 
     pred_df = pd.DataFrame({"labels": predictions, "confidence": probs})
 
@@ -203,25 +191,43 @@ if pred_type == "Single":
                     )
                     st.stop()
 
+                pred_print = """
+                <h2>
+                    <center>
+                    The predicted class is {} 
+                    with a confidence of: {}%
+                    </center>
+                </h2>                
+                """
+
                 if model_type == "Vanilla-Net":
-                    pred_df = pred_NN(X=[feats])
+                    try:
+                        pred_df = pred_NN(X=[feats])
+                    except:
+                        print("Retrying!")
+                    finally:
+                        pred_df = pred_NN(X=[feats])
+
                     st.markdown(
-                        f"<h2><center>The predicted class is: {pred_df.labels[0]} with a confidence of: {round(pred_df.confidence[0], 2)}%</center></h2>",
+                        pred_print.format(pred_df.labels[0], pred_df.confidence[0]),
                         unsafe_allow_html=True,
                     )
 
                 else:
                     try:
-                        model = load_model(model_name=model_type)
+                        model = joblib.load(
+                            "./ML_models/Tuned_LightGBM_without_trans.model"
+                        )
                     except:
                         print("Reloading model")
                     finally:
-                        model = load_model(model_name=model_type)
-
+                        model = joblib.load(
+                            "./ML_models/Tuned_LightGBM_without_trans.model"
+                        )
                     pred_df = predict(feats=[feats], model=model)
 
                     st.markdown(
-                        f"<h2><center>The predicted class is: {pred_df.labels.values[0]} with a confidence of: {round(pred_df.confidence[0], 2)}%</center></h2>",
+                        pred_print.format(pred_df.labels[0], pred_df.confidence[0]),
                         unsafe_allow_html=True,
                     )
 
@@ -236,7 +242,7 @@ else:
         "<h3><center>Upload test.csv file</center></h3>", unsafe_allow_html=True
     )
 
-    url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test.csv"
+    url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test_tiny.csv"
     st.markdown(
         f"<center><i>For testing the batch prediciton module download the csv file from <a href={url}>here</a><center> and upload it</i></center>",
         unsafe_allow_html=True,
@@ -254,17 +260,25 @@ else:
 
         if btn:
             if model_type == "Vanilla-Net":
-                pred_df = pred_NN(X=df.values)
+                try:
+                    pred_df = pred_NN(X=df.values)
+                except:
+                    print("Retrying!")
+                finally:
+                    pred_df = pred_NN(X=df.values)
 
                 st.dataframe(pred_df)
             else:
                 try:
-                    model = load_model(model_name=model_type)
+                    model = joblib.load(
+                        "./ML_models/Tuned_LightGBM_without_trans.model"
+                    )
                 except:
                     print("Reloading model")
                 finally:
-                    model = load_model(model_name=model_type)
-
+                    model = joblib.load(
+                        "./ML_models/Tuned_LightGBM_without_trans.model"
+                    )
                 pred_df = predict(feats=df.values, model=model)
 
                 st.dataframe(pred_df)
