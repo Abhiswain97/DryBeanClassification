@@ -9,7 +9,7 @@ def predict(instances):
     payload = {"instances": [instances]}
 
     res = requests.post(
-        url="https://drybeanapp.herokuapp.com/v1/models/saved_model:predict",
+        url="http://localhost:8501/v1/models/saved_model:predict",
         json=payload,
     )
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     df = pd.read_csv("full_feats_test.csv")
     X = df.values
 
-    X_test = X[:5, :]
+    X_test = X
     scaler = joblib.load("../ML_models/NN_scaler.scaler")
 
     X_test_scaled = scaler.transform(X_test)

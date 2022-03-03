@@ -4,6 +4,7 @@ import requests
 import joblib
 import pandas as pd
 import numpy as np
+import time
 
 st.set_page_config(
     page_title="Dry Bean app",
@@ -24,36 +25,43 @@ idx2class = {
 }
 
 
-@st.cache
+@st.cache(suppress_st_warning=True)
 def pred_NN(X):
     predictions = []
     confs = []
+
+    start = time.time()
 
     with st.spinner("Using the served TF model........"):
         scaler = joblib.load("./ML_models/NN_scaler.scaler")
         inst_scaled = scaler.transform(X)
 
-        for i, ins in enumerate(inst_scaled):
-            payload = {"instances": [ins.tolist()]}
+        payload = {"instances": inst_scaled.tolist()}
 
-            res = requests.post(
-                url="https://drybeanapp.herokuapp.com/v1/models/saved_model:predict",
-                json=payload,
-            )
+        res = requests.post(
+            url="https://drybeanapp.herokuapp.com/v1/models/saved_model:predict",
+            json=payload,
+        )
 
-            pred = res.json()
+        preds = res.json()
 
-            pred = pred["predictions"]
+        for pred in preds["predictions"]:
 
-            confidence = tf.nn.softmax(pred[0])
+            confidence = tf.nn.softmax(pred)
 
-            idx = tf.argmax(pred, axis=1)
+            idx = tf.argmax(pred, axis=0)
 
-            predictions.append(idx2class[idx.numpy()[0]])
+            predictions.append(idx2class[idx.numpy()])
 
             confs.append(round(np.max(confidence) * 100, 2))
 
             pred_df = pd.DataFrame({"labels": predictions, "confidence": confs})
+
+        end = time.time()
+
+        st.success(
+            f"Prediction Complete for all instances in {round(end-start, 2)} secs"
+        )
 
         return pred_df
 
@@ -72,16 +80,19 @@ def load_model(model_name):
     return model
 
 
-@st.cache
+@st.cache(suppress_st_warning=True)
 def predict(feats, model):
     predictions = []
     probs = []
+
     with st.spinner("Classifying...."):
         preds = model.predict(feats)
         prob = model.predict_proba(feats)
         for idx, pred in enumerate(preds):
             predictions.append(idx2class[pred])
             probs.append(round(np.max(prob) * 100, 2))
+
+    st.success(f"Prediction Complete for all instances")
 
     pred_df = pd.DataFrame({"labels": predictions, "confidence": probs})
 
