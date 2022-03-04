@@ -95,19 +95,34 @@ def predict(feats, model):
 st.sidebar.title("Dry Bean Classifier")
 
 # Type of predicition
-pred_type = st.sidebar.selectbox(
-    "Type of predition", options=["Single", "Batch"], index=0
+pred_type = st.sidebar.radio(
+    "Type of predition",
+    options=["Single", "Batch"],
+    index=0,
+    help="The type of prediction: Single prediction using form or batch prediction using csv file",
 )
 
 # Choose model
-model_type = st.sidebar.selectbox(
-    "Choose Model", options=["LightGBM", "Vanilla-Net"], index=0
+model_type = st.sidebar.radio(
+    "Choose Model",
+    options=["LightGBM", "Vanilla-Net"],
+    index=0,
+    help="Currently we have two models: {Light gradient boosting & Feed-forward-NN}",
 )
 
-st.sidebar.markdown(
-    "<h3>App for Classification of Dry Beans from shape and dimensional features</h3>",
-    unsafe_allow_html=True,
-)
+
+with st.expander(label="About the app", expanded=True):
+    st.write(
+        """
+        1. *This app can classify dry beans into 7 categories based on 16 features*
+        2. You can do:
+            - Batch prediciton using a .csv file. 
+            - Single prediction using a form. 
+        3. Two models are provided: *Light Gradient Boosting Machine* & *Feed-forward-NN*
+        """
+    )
+
+
 pred_df = pd.DataFrame()
 
 # Single prediction done using a form
@@ -115,9 +130,23 @@ model = None
 
 if pred_type == "Single":
 
-    with st.form("Dry Bean Classification", clear_on_submit=True):
+    with st.form("Dry Bean Classification"):
         st.markdown(
-            "<h1><center>Enter Feature values</center></h1>",
+            """
+            <h2>
+                <center>
+                    Enter Feature values
+                </center>
+            </h2>
+
+            <center>
+                <i>
+                    The form has already been filled up with defaults
+                    for ease of demonstration.
+                </i>
+            </center>
+            <br>
+            """,
             unsafe_allow_html=True,
         )
 
@@ -244,7 +273,14 @@ else:
 
     url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test_tiny.csv"
     st.markdown(
-        f"<center><i>For testing the batch prediciton module download the csv file from <a href={url}>here</a><center> and upload it</i></center>",
+        f"""
+        <center>
+            <i>
+                For testing the batch prediciton module download the csv file from 
+                <a href={url}> here </a> and upload it
+            </i>
+        </center>
+        """,
         unsafe_allow_html=True,
     )
 
@@ -285,5 +321,7 @@ else:
         if len(pred_df) != 0:
             csv = pred_df.to_csv(index=False)
             st.download_button(
-                label="Download predictions", data=csv, file_name="preds.csv"
+                label="Download predictions",
+                data=csv,
+                file_name="preds.csv",
             )
