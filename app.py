@@ -8,7 +8,6 @@ import time
 
 st.set_page_config(page_title="Dry Bean app", page_icon=":seedling:", layout="wide")
 
-
 idx2class = {
     0: "BARBUNYA",
     1: "BOMBAY",
@@ -22,6 +21,21 @@ idx2class = {
 
 @st.cache(suppress_st_warning=True)
 def pred_NN(X):
+    """
+    This method makes predicitons using the served tensorflow model
+
+    Parameters
+    ----------
+
+    X: 2d array of shape (n_samples, 16)
+
+
+    Returns
+    -------
+
+    pred_df: pd.Dataframe containing labels and confindence values
+    """
+
     predictions = []
     confs = []
 
@@ -61,6 +75,22 @@ def pred_NN(X):
 
 @st.cache(suppress_st_warning=True)
 def predict(feats, model):
+    """
+    This method makes predicitons using the served tensorflow model
+
+    Parameters
+    ----------
+
+    feats: 2d array of shape (n_samples, 16)
+    model: the scikit-learn model
+
+
+    Returns
+    -------
+
+    pred_df: pd.Dataframe containing labels and confindence values
+    """
+
     predictions = []
     probs = []
 
@@ -83,6 +113,10 @@ def predict(feats, model):
 
 
 def batch_pred(file):
+    """
+    Funciton to make batch prediction from csv file
+    """
+
     pred_df = pd.DataFrame()
 
     df = pd.read_csv(file)
