@@ -6,10 +6,7 @@ import pandas as pd
 import numpy as np
 import time
 
-st.set_page_config(
-    page_title="Dry Bean app",
-    page_icon=":seedling:",
-)
+st.set_page_config(page_title="Dry Bean app", page_icon=":seedling:", layout="wide")
 
 
 idx2class = {
@@ -85,6 +82,46 @@ def predict(feats, model):
     return pred_df
 
 
+def batch_pred(file):
+    pred_df = pd.DataFrame()
+
+    df = pd.read_csv(file)
+
+    with st.expander("Check your uploaded csv"):
+        st.dataframe(df)
+
+    r5 = st.columns(5)
+    btn = r5[2].button("Predict")
+
+    if btn:
+        if model_type == "Vanilla-Net":
+            try:
+                pred_df = pred_NN(X=df.values)
+            except:
+                print("Retrying!")
+            finally:
+                pred_df = pred_NN(X=df.values)
+
+            st.dataframe(pred_df)
+        else:
+            try:
+                model = joblib.load("./ML_models/Tuned_LightGBM_without_trans.model")
+            except:
+                print("Reloading model")
+            finally:
+                model = joblib.load("./ML_models/Tuned_LightGBM_without_trans.model")
+            pred_df = predict(feats=df.values, model=model)
+
+            st.dataframe(pred_df)
+    if len(pred_df) != 0:
+        csv = pred_df.to_csv(index=False)
+        st.download_button(
+            label="Download predictions",
+            data=csv,
+            file_name="preds.csv",
+        )
+
+
 # ----------------------------------------- UI ---------------------------------------------
 
 # Sidebars
@@ -108,13 +145,24 @@ with st.expander(label="About the app", expanded=True):
         2. You can do:
             - Batch prediciton using a .csv file. 
             - Single prediction using a form. 
-        3. Two models are provided: *Light Gradient Boosting Machine* & *Feed-forward-NN*
         """
     )
 
+with st.expander(label="Using the app"):
+    st.write(
+        """
+        1. Choose the type of prediction form the sidebar: Single or Batch
+            - Batch prediciton is done using a .csv file or just paste the url to a .csv file. 
+            - Single prediction is done using a form. 
+        2. Choose the model: *Light Gradient Boosting Machine* or *Feed-forward-NN* from the sidebar
+        3. Click on predict
+        """
+    )
+st.sidebar.image("images/Beans.png")
+
 
 # Type of predicition
-pred_type = st.selectbox(
+pred_type = st.sidebar.radio(
     "Type of predition",
     options=["Single", "Batch"],
     index=0,
@@ -122,17 +170,17 @@ pred_type = st.selectbox(
 )
 
 # Choose model
-model_type = st.selectbox(
+model_type = st.sidebar.radio(
     "Choose Model",
     options=["LightGBM", "Vanilla-Net"],
     index=0,
     help="Currently we have two models: {Light gradient boosting & Feed-forward-NN}",
 )
 
-pred_df = pd.DataFrame()
 
 # Single prediction done using a form
 model = None
+pred_df = pd.DataFrame()
 
 if pred_type == "Single":
 
@@ -274,7 +322,7 @@ if pred_type == "Single":
 
 else:
 
-    select = st.selectbox(
+    select = st.sidebar.radio(
         """
         Upload CSV or paste a URL
         """,
@@ -282,11 +330,11 @@ else:
         index=0,
     )
 
+    url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test_tiny.csv"
+
     if select == "Upload-CSV":
 
         file_uploader = st.file_uploader("")
-
-        url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test_tiny.csv"
 
         if file_uploader is None:
             st.info(
@@ -295,90 +343,21 @@ else:
                 """
             )
         else:
-            df = pd.read_csv(file_uploader)
-
-            with st.expander("Check your uploaded csv"):
-                st.dataframe(df)
-
-            r5 = st.columns(5)
-            btn = r5[2].button("Predict")
-
-            if btn:
-                if model_type == "Vanilla-Net":
-                    try:
-                        pred_df = pred_NN(X=df.values)
-                    except:
-                        print("Retrying!")
-                    finally:
-                        pred_df = pred_NN(X=df.values)
-
-                    st.dataframe(pred_df)
-                else:
-                    try:
-                        model = joblib.load(
-                            "./ML_models/Tuned_LightGBM_without_trans.model"
-                        )
-                    except:
-                        print("Reloading model")
-                    finally:
-                        model = joblib.load(
-                            "./ML_models/Tuned_LightGBM_without_trans.model"
-                        )
-                    pred_df = predict(feats=df.values, model=model)
-
-                    st.dataframe(pred_df)
-            if len(pred_df) != 0:
-                csv = pred_df.to_csv(index=False)
-                st.download_button(
-                    label="Download predictions",
-                    data=csv,
-                    file_name="preds.csv",
-                )
+            batch_pred(file_uploader)
 
     else:
         url_input = st.text_input(
             "Paste .csv file URL",
-            value="https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test_tiny.csv",
+            placeholder="Paste URL here....",
         )
 
-        if url_input is not None:
+        if url_input:
+            batch_pred(url_input)
+        else:
+            st.info(
+                f"""
+                👆 Sample url: {url}   
+                """
+            )
 
-            df = pd.read_csv(url_input)
-
-            with st.expander("Check your uploaded csv"):
-                st.dataframe(df)
-
-            r5 = st.columns(5)
-            btn = r5[2].button("Predict")
-
-            if btn:
-                if model_type == "Vanilla-Net":
-                    try:
-                        pred_df = pred_NN(X=df.values)
-                    except:
-                        print("Retrying!")
-                    finally:
-                        pred_df = pred_NN(X=df.values)
-
-                    st.dataframe(pred_df)
-                else:
-                    try:
-                        model = joblib.load(
-                            "./ML_models/Tuned_LightGBM_without_trans.model"
-                        )
-                    except:
-                        print("Reloading model")
-                    finally:
-                        model = joblib.load(
-                            "./ML_models/Tuned_LightGBM_without_trans.model"
-                        )
-                    pred_df = predict(feats=df.values, model=model)
-
-                    st.dataframe(pred_df)
-            if len(pred_df) != 0:
-                csv = pred_df.to_csv(index=False)
-                st.download_button(
-                    label="Download predictions",
-                    data=csv,
-                    file_name="preds.csv",
-                )
+st.sidebar.write("*Version: 0.0.1*")
