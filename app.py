@@ -272,13 +272,13 @@ else:
 
     url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test_tiny.csv"
 
-    st.info(
-        f"""
-        👆 Upload a .csv file first. Sample to try: [feats.csv]({url})   
-        """
-    )
-
-    if file_uploader:
+    if file_uploader is None:
+        st.info(
+            f"""
+            👆 Upload a .csv file first. Sample to try: [feats.csv]({url})   
+            """
+        )
+    else:
         df = pd.read_csv(file_uploader)
 
         st.dataframe(data=df.head())
