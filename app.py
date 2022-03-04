@@ -267,24 +267,16 @@ if pred_type == "Single":
         )
 
 else:
-    st.markdown(
-        "<h3><center>Upload test.csv file</center></h3>", unsafe_allow_html=True
-    )
-
-    url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test_tiny.csv"
-    st.markdown(
-        f"""
-        <center>
-            <i>
-                For testing the batch prediciton module download the csv file from 
-                <a href={url}> here </a> and upload it
-            </i>
-        </center>
-        """,
-        unsafe_allow_html=True,
-    )
 
     file_uploader = st.file_uploader("")
+
+    url = "https://feat-files.s3.us-east-2.amazonaws.com/full_feats_test_tiny.csv"
+
+    st.info(
+        f"""
+        👆 Upload a .csv file first. Sample to try: [feats.csv]({url})   
+        """
+    )
 
     if file_uploader:
         df = pd.read_csv(file_uploader)
