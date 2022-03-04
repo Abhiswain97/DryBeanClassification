@@ -6,8 +6,19 @@
 - For making predictions using the `Vanilla_Net`, the tensorflow model is served at heroku container services using tensorflow serving.
 - The app makes calls to the served model to get predictions.
 
+## App UI
+
+### Single prediction
+
 <p align="center">
-  <img src="images/App.gif">
+  <img src="images/App_single.png">
+</p>
+
+
+### Batch prediciton
+
+<p align="center">
+  <img src="images/App_batch.png">
 </p>
 
 
