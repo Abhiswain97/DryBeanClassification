@@ -9,10 +9,8 @@ import time
 st.set_page_config(
     page_title="Dry Bean app",
     page_icon=":seedling:",
-    layout="wide",
 )
 
-st.sidebar.image("images/Beans.png")
 
 idx2class = {
     0: "BARBUNYA",
@@ -92,27 +90,16 @@ def predict(feats, model):
 # Sidebars
 # Title "Dry bean Classifier"
 
-st.sidebar.title("Dry Bean Classifier")
-
-# Type of predicition
-pred_type = st.sidebar.radio(
-    "Type of predition",
-    options=["Single", "Batch"],
-    index=0,
-    help="The type of prediction: Single prediction using form or batch prediction using csv file",
+st.markdown(
+    """
+    <center>
+        <h1>Dry Bean Classifier</h2>
+    </center>""",
+    unsafe_allow_html=True,
 )
-
-# Choose model
-model_type = st.sidebar.radio(
-    "Choose Model",
-    options=["LightGBM", "Vanilla-Net"],
-    index=0,
-    help="Currently we have two models: {Light gradient boosting & Feed-forward-NN}",
-)
-
 
 with st.expander(label="About the app", expanded=True):
-    st.write(
+    st.info(
         """
         1. *This app can classify dry beans into 7 categories based on 16 features*
         2. You can do:
@@ -122,6 +109,22 @@ with st.expander(label="About the app", expanded=True):
         """
     )
 
+
+# Type of predicition
+pred_type = st.selectbox(
+    "Type of predition",
+    options=["Single", "Batch"],
+    index=0,
+    help="The type of prediction: Single prediction using form or batch prediction using csv file",
+)
+
+# Choose model
+model_type = st.selectbox(
+    "Choose Model",
+    options=["LightGBM", "Vanilla-Net"],
+    index=0,
+    help="Currently we have two models: {Light gradient boosting & Feed-forward-NN}",
+)
 
 pred_df = pd.DataFrame()
 
@@ -281,7 +284,8 @@ else:
     else:
         df = pd.read_csv(file_uploader)
 
-        st.dataframe(data=df.head())
+        with st.expander("Check your uploaded csv"):
+            st.dataframe(df)
 
         r5 = st.columns(5)
         btn = r5[2].button("Predict")
