@@ -393,5 +393,3 @@ else:
                 👆 Sample url: {url}   
                 """
             )
-
-st.sidebar.write("*Version: 0.0.1*")
