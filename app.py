@@ -97,17 +97,29 @@ def predict(feats, model):
     start = time.time()
 
     with st.spinner("Classifying...."):
-        preds = model.predict(feats)
-        prob = model.predict_proba(feats)
+
+        data = {"params": feats}
+
+        res = requests.post(url="http://127.0.0.1:8000/predict", json=data)
+
+        value = res.json()
+
+        preds = value["preds"]
+        probs = value["probs"]
+
+        confs = []
+
         for pred in preds:
             predictions.append(idx2class[pred])
-            probs.append(round(np.max(prob) * 100, 2))
+
+        for prob in probs:
+            confs.append(round(np.max(prob) * 100, 2))
 
     end = time.time()
 
     st.success(f"Prediction done in: {round(end-start, 2)}s")
 
-    pred_df = pd.DataFrame({"labels": predictions, "confidence": probs})
+    pred_df = pd.DataFrame({"labels": predictions, "confidence": confs})
 
     return pred_df
 
@@ -144,7 +156,7 @@ def batch_pred(file):
                 print("Reloading model")
             finally:
                 model = joblib.load("./ML_models/Tuned_LightGBM_without_trans.model")
-            pred_df = predict(feats=df.values, model=model)
+            pred_df = predict(feats=df.values.tolist(), model=model)
 
             st.dataframe(pred_df)
     if len(pred_df) != 0:
@@ -245,7 +257,7 @@ if pred_type == "Single":
         r5 = st.columns(5)
 
         # Row 1
-        Area = r1[0].text_input("Area", value="40000")
+        Area = r1[0].text_input("Area", value="40000.0")
         Perimeter = r1[1].text_input("Perimeter", value="727.877")
         MajorAxisLength = r1[2].text_input("MajorAxisLength", value="246.6991625")
         MinorAxisLength = r1[3].text_input("MinorAxisLength", value="206.8884621")
@@ -253,7 +265,7 @@ if pred_type == "Single":
         # Row 2
         AspectRatio = r2[0].text_input("AspectRatio", value="1.192425909")
         Eccentricity = r2[1].text_input("Eccentricity", value="0.544706845")
-        ConvexArea = r2[2].text_input("ConvexArea", value="40425")
+        ConvexArea = r2[2].text_input("ConvexArea", value="40425.0")
         EquiDiameter = r2[3].text_input("EquiDiameter", value="225.6758334")
 
         # Row 3
@@ -301,7 +313,7 @@ if pred_type == "Single":
                 )
             else:
                 try:
-                    feats = [float(feat) for feat in feats]
+                    feats = [float(f) for f in feats]
                 except:
                     st.error(
                         "Only int or float values are allowed! Filling with default values!"
