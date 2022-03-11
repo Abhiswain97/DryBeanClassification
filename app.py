@@ -6,7 +6,19 @@ import pandas as pd
 import numpy as np
 import time
 
-st.set_page_config(page_title="Dry Bean app", page_icon=":seedling:", layout="wide")
+st.set_page_config(
+    page_title="Dry Bean app",
+    page_icon=":seedling:",
+    layout="wide",
+    menu_items={
+        "About": """
+        ## Thanks for using the app
+        Made with ❤️ by [Abhiswain97](https://github.com/Abhiswain97)
+        """,
+        "Get Help": "https://twitter.com/Abhi08asAs",
+        "Report a Bug": "https://github.com/Abhiswain97/DryBeanClassification/issues",
+    },
+)
 
 idx2class = {
     0: "BARBUNYA",
