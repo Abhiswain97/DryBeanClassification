@@ -38,13 +38,11 @@ def pred_NN(X):
 
     Parameters
     ----------
-
     X: 2d array of shape (n_samples, 16)
 
 
     Returns
     -------
-
     pred_df: pd.Dataframe containing labels and confindence values
     """
 
@@ -53,7 +51,7 @@ def pred_NN(X):
 
     start = time.time()
 
-    with st.spinner("Using the served TF model........"):
+    with st.spinner("Predicting........"):
         scaler = joblib.load("./ML_models/NN_scaler.scaler")
         inst_scaled = scaler.transform(X)
 
@@ -64,9 +62,19 @@ def pred_NN(X):
             json=payload,
         )
 
-        preds = res.json()
+        preds = []
 
-        for pred in preds["predictions"]:
+        try:
+            preds = res.json()
+            preds = preds["predictions"]
+        except:
+            pass
+
+        finally:
+            model = tf.keras.models.load_model("models/saved_model/5")
+            preds = model(inst_scaled)
+
+        for pred in preds:
 
             confidence = tf.nn.softmax(pred)
 
@@ -92,14 +100,12 @@ def predict(feats, model):
 
     Parameters
     ----------
-
     feats: 2d array of shape (n_samples, 16)
     model: the scikit-learn model
 
 
     Returns
     -------
-
     pred_df: pd.Dataframe containing labels and confindence values
     """
 
@@ -189,7 +195,7 @@ with st.expander(label="About the app", expanded=True):
         """
         1. *This app can classify dry beans into 7 categories based on 16 features*
         2. You can do:
-            - Batch prediciton using a .csv file. 
+            - Batch prediciton using a .csv file or link to .csv file. 
             - Single prediction using a form. 
         """
     )
