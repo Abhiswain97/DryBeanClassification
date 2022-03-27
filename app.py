@@ -314,18 +314,13 @@ if pred_type == "Single":
                     count += 1
 
             if count != 0:
-                st.error(
-                    "One or more fields are left blank! Filling it with default value!"
-                )
+                st.warning("One or more fields are left blank!")
             else:
                 try:
                     feats = [float(feat) for feat in feats]
                 except:
-                    st.error(
-                        "Only int or float values are allowed! Filling with default values!"
-                    )
+                    st.warning("Only int or float values are allowed!")
                     st.stop()
-
                 pred_print = """
                 <h2>
                     <center>
