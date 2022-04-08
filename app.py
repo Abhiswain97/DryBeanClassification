@@ -7,7 +7,6 @@ import numpy as np
 import time
 
 # Page config setup
-
 st.set_page_config(
     page_title="Dry Bean app",
     page_icon=":seedling:",
