@@ -6,6 +6,8 @@ import pandas as pd
 import numpy as np
 import time
 
+# Page config setup
+
 st.set_page_config(
     page_title="Dry Bean app",
     page_icon=":seedling:",
@@ -19,7 +21,7 @@ st.set_page_config(
         "Report a Bug": "https://github.com/Abhiswain97/DryBeanClassification/issues",
     },
 )
-
+# Mapping ids to classes
 idx2class = {
     0: "BARBUNYA",
     1: "BOMBAY",
