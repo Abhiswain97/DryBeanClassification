@@ -1,5 +1,15 @@
 # Diploma Thesis
 
+## Documentation:
+
+### Complete thesis document: [Diploma Theis](https://github.com/Abhiswain97/DryBeanClassification/blob/master/Documents/Phase-6-Diploma-thesis-104.pdf)
+### Phase-wise documents:
+- [Phase-1-Documentation](https://github.com/Abhiswain97/DryBeanClassification/blob/master/Documents/Phase-1-Documentation.pdf)
+- [Phase-2-EDA-Documentation](https://github.com/Abhiswain97/DryBeanClassification/blob/master/Documents/Phase-2-EDA-Documentation.pdf)
+- [Phase-3-Modelling](https://github.com/Abhiswain97/DryBeanClassification/blob/master/Documents/Phase-3-Modelling.pdf)
+- [Phase-4-Advanced-Modelling](https://github.com/Abhiswain97/DryBeanClassification/blob/master/Documents/Phase-4-Advanced-Modelling.pdf)
+- [Phase-5-Deployment](https://github.com/Abhiswain97/DryBeanClassification/blob/master/Documents/Phase-5-Deployment.pdf)
+
 ### App is deployed at: [DryBeanClassifer](https://share.streamlit.io/abhiswain97/drybeanclassification/app.py). Check it out !
 
 - The app is deployed on share.streamlit.io.
