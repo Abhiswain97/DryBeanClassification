@@ -20,6 +20,7 @@ st.set_page_config(
         "Report a Bug": "https://github.com/Abhiswain97/DryBeanClassification/issues",
     },
 )
+
 # Mapping ids to classes
 idx2class = {
     0: "BARBUNYA",
@@ -76,7 +77,6 @@ def pred_NN(X):
             preds = model(inst_scaled)
 
         for pred in preds:
-
             confidence = tf.nn.softmax(pred)
 
             idx = tf.argmax(pred, axis=0)
@@ -89,7 +89,7 @@ def pred_NN(X):
 
         end = time.time()
 
-        st.success(f"Prediction done in: {round(end-start, 2)}s")
+        st.success(f"Prediction done in: {round(end - start, 2)}s")
 
         return pred_df
 
@@ -124,7 +124,7 @@ def predict(feats, model):
 
     end = time.time()
 
-    st.success(f"Prediction done in: {round(end-start, 2)}s")
+    st.success(f"Prediction done in: {round(end - start, 2)}s")
 
     pred_df = pd.DataFrame({"labels": predictions, "confidence": probs})
 
@@ -190,7 +190,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-
 with st.expander(label="About the app", expanded=True):
     st.info(
         """
@@ -213,7 +212,6 @@ with st.expander(label="Using the app"):
     )
 st.sidebar.image("images/Beans.png")
 
-
 # Type of predicition
 pred_type = st.sidebar.radio(
     "Type of predition",
@@ -229,7 +227,6 @@ model_type = st.sidebar.radio(
     index=0,
     help="Currently we have two models: {Light gradient boosting & Feed-forward-NN}",
 )
-
 
 # Single prediction done using a form
 model = None
